@@ -1,0 +1,6 @@
+#include <stdio.h>
+#include <locale.h>
+int main(){
+	printf("Rusanov Eugeni Georgievich I914b");
+	return 0;
+}
