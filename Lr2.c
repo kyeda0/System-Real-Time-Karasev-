@@ -24,6 +24,7 @@ void *long_thread_id2(void * notused){
 
 int main(void){
     printf("Prog theread PID %d\n",getpid());
+    printf("Rusanov Eugeni I914B");
     pthread_create(&long_thread_id1,NULL,long_thread_id1,NULL);
     pthread_create(&long_thread_id2,NULL,long_thread_id2,NULL);
     sleep(40);
