@@ -3,31 +3,26 @@
 #include <stdlib.h>
 #include <sys/neutrino.h>
 #include <unistd.h>
-#include <errno.h> 
+#include <errno.h>
 
-void compress_string(char* input, char* output) {
-    int count, pos = 0;
-    char current;
+void shift_left_2(char* input, char* output) {
+    int len = strlen(input);
 
-    while (*input) {
-        current = *input++;
-        count = 1;
-
-        while (*input == current) {
-            count++;
-            input++;
-        }
-
-        pos += sprintf(output + pos, "%d%c", count, current);
+    if (len <= 2) {
+        strcpy(output, input);
+        return;
     }
-    output[pos] = '\0';
+
+    strcpy(output, input + 2);
+    strncat(output, input, 2);
+    output[len] = '\0'; 
 }
 
 void server(void) {
     int rcvid;
     int chid;
     char message[512];
-    char compressed[512];
+    char shifted[512];
 
     printf("Server start working\n");
 
@@ -48,10 +43,10 @@ void server(void) {
 
         printf("Received message: \"%s\"\n", message);
 
-        compress_string(message, compressed);
-        printf("Compressed message: \"%s\"\n", compressed);
+        shift_left_2(message, shifted);
+        printf("Shifted message: \"%s\"\n", shifted);
 
-        if (MsgReply(rcvid, 0, compressed, strlen(compressed) + 1) == -1) {
+        if (MsgReply(rcvid, 0, shifted, strlen(shifted) + 1) == -1) {
             perror("MsgReply");
         }
     }
